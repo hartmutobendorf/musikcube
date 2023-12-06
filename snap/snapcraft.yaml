@@ -1,0 +1,147 @@
+name: musikcube
+base: core22
+version: "3.0.2"
+summary: CLI music player
+description: |
+  a cross-platform, terminal-based audio engine, library, player and server written in c++.
+
+confinement: strict
+
+parts:
+  musikcube:
+    source: https://github.com/clangen/musikcube/archive/refs/tags/3.0.2.tar.gz
+    source-type: tar
+    plugin: cmake
+    override-build: |
+      bash /root/project/script/build-vendor-libraries.sh
+      cp -R vendor-* vendor
+      bash /root/project/script/stage-vendor-libraries.sh
+      snapcraftctl build  
+      mkdir -p $CRAFT_PART_INSTALL/bin
+      cp -R /root/project/bin/* $CRAFT_PART_INSTALL/bin/  
+    # make-parameters:
+    #   - install
+#    cmake-parameters:
+#      - -G "Unix Makefiles"
+    build-packages:
+      - wget
+      - gcc-12
+      - libgcc-12-dev
+      - g++
+      - make
+      - build-essential 
+      - clang 
+      - cmake 
+      - libasio-dev 
+      - libogg-dev 
+      - libvorbis-dev 
+      - libavutil-dev 
+      - libavformat-dev 
+      - libswresample-dev 
+      - libncursesw5-dev 
+      - libasound2-dev 
+      - libpulse-dev 
+      - pulseaudio 
+      - libmicrohttpd-dev 
+      - libmp3lame-dev 
+      - libcurl4-openssl-dev 
+      - libev-dev 
+      - libssl-dev 
+      - libtag1-dev 
+      - libopenmpt-dev
+      - libpipewire-0.3-dev
+      - portaudio19-dev
+      - libopus-dev
+    stage:
+      - bin/**
+    stage-packages:
+      - pulseaudio 
+      - libcurl4
+      - libunwind-15
+      - libpulse0
+      - liborc-0.4-0
+      - libjack0
+      - libicu70
+      - libgstreamer1.0-0
+      - libgstrtspserver-1.0-0
+      - libgstreamer-plugins-base1.0-0
+      - libgstreamer-plugins-good1.0-0
+      - libfftw3-bin
+      - libdconf1
+      - libtag1v5
+      - libzvbi0
+      - libzmq5
+      - libxvidcore4
+      - libxcb1
+      - libx265-199
+      - libx264-163
+      - libwebp7
+      - libwebpmux3
+      - libvpx7
+      - libvorbis0a
+      - libvorbisfile3
+      - libvdpau1
+      - libva2
+      - libva-x11-2
+      - libva-drm2
+      - libudfread0
+      - libtwolame0
+      - libtheora0
+      - libthai0
+      - libswresample3
+      - libssh-gcrypt-4 
+      - libev4
+      - ocl-icd-libopencl1
+      - libxfixes3
+      - libopencl-clang13
+      - libxrender1
+      - libaom3
+      - libavcodec58
+      - libavutil56
+      - libavformat58
+      - libbluray2
+      - libcairo2
+      - libchromaprint1
+      - libcodec2-1.0
+      - libdatrie1
+      - libfontconfig
+      - libfribidi0
+      - libdav1d5
+      - libgdk-pixbuf-2.0-0
+      - libgme0
+      - libgraphite2-3
+      - libgsm1
+      - libharfbuzz0b
+      - libjpeg9
+      - libmfx1
+      - libmp3lame0
+      - libmpg123-0
+      - libnorm1
+      - libnuma1
+      - libopenjp2-7
+      - libopenmpt0
+      - libpango1.0-0
+      - libpangocairo-1.0-0
+      - libpangoft2-1.0-0
+      - libpgm-5.3-0
+      - libpixman-1-0
+      - librabbitmq4
+      - librsvg2-2
+      - libshine3
+      - libsnappy1v5
+      - libsodium23
+      - libspeex1
+      - libsrt1.4-gnutls
+      - libglu1-mesa
+      - libmicrohttpd12
+      # - libc6
+      # - libstdc++6
+      - libpipewire-0.3-0
+      - libportaudio2
+
+apps:
+  musikcube:
+    command: bin/musikcube
+#    environment:
+#      "LD_LIBRARY_PATH": "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio"
+
