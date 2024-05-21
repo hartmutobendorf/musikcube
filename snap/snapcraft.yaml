@@ -6,6 +6,7 @@ description: |
   a cross-platform, terminal-based audio engine, library, player and server written in c++.
 
 confinement: strict
+#confinement: devmode
 
 parts:
   musikcube:
@@ -142,6 +143,17 @@ parts:
 apps:
   musikcube:
     command: bin/musikcube
+    plugs:
+      - network
+      - network-bind
+      - home
+      - pulseaudio
+      - mount-observe
+      - optical-drive
+      - removable-media
+      - audio-playback
+      - jack1
+      - avahi-control
 #    environment:
 #      "LD_LIBRARY_PATH": "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio"
 
